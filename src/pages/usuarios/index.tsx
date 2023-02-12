@@ -1,6 +1,6 @@
 import type { GetServerSideProps, NextPage } from "next";
 import Link from "next/link";
-import { ListUsuariosUseCase } from "@/@core/application/usuario/list-usuarios.use-case"; 
+import { UsuarioUseCase } from "@/@core/application/usuario/usuario.use-case"; 
 import { UsuarioProps } from "@/@core/domain/entities/usuario"; 
 import { container, Registry } from "@/@core/infra/container-registry";
 
@@ -30,8 +30,8 @@ const Usuarios: NextPage<UsuariosProps> = ({ usuarios }) => {
 export default Usuarios;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const useCase = container.get<ListUsuariosUseCase>(Registry.ListUsuariosUseCase);
-  const usuarios = await useCase.execute();
+  const useCase = container.get<UsuarioUseCase>(Registry.UsuarioUseCase);
+  const usuarios = await useCase.list();
 
   return {
     props: {

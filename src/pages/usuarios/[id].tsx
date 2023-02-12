@@ -1,7 +1,6 @@
-import { GetUsuarioUseCase } from "@/@core/application/usuario/get-usuario.uses-case";
+import { UsuarioUseCase } from "@/@core/application/usuario/usuario.use-case"; 
 import { Usuario, UsuarioProps } from "@/@core/domain/entities/usuario";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
-import { useContext } from "react";
 import { container, Registry } from "../../@core/infra/container-registry";
 
 type UsuarioDetailPageProps = {
@@ -15,7 +14,7 @@ export const UsuarioDetailPage: NextPage<UsuarioDetailPageProps> = ({
   return (
     <div>
       <h3>{usuarioEntity.nome}</h3>
-      <label>email</label> {usuarioEntity.email}
+      <label>login</label> {usuarioEntity.login}
     </div>
   );
 };
@@ -31,8 +30,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { id } = context.params || {};
-  const useCase = container.get<GetUsuarioUseCase>(Registry.GetUsuarioUseCase);
-  const usuario = await useCase.execute(+id!);
+  const useCase = container.get<UsuarioUseCase>(Registry.UsuarioUseCase);
+  const usuario = await useCase.get(+id!);
   return {
     props: {
       usuario: usuario.toJSON(),
