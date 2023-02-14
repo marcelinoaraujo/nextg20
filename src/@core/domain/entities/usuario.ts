@@ -1,6 +1,7 @@
 export type UsuarioProps = {
     login: string;
     nome: string;
+    senha?: string;
     id?: number;
   };
   
@@ -19,11 +20,16 @@ export type UsuarioProps = {
       return this.props.nome;
     }
   
+    get senha() {
+      return this.props.senha;
+    }
+
     toJSON(){
       return {
         id: this.id,
         login: this.login,
         nome: this.nome,
+        naturalidade: this.senha||''
       }
     }
   }
