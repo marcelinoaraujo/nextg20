@@ -8,7 +8,14 @@ export class UsuarioHttpGateway implements UsuarioGateway {
   constructor(private http: AxiosInstance) {}
 
   async create(usuario: Usuario): Promise<Usuario> {
-    return this.http.post<ResultHttp<UsuarioProps>>("/usuarios",usuario).then((res) => {
+    return this.http.post<ResultHttp<UsuarioProps>>(`/usuarios`,usuario).then((res) => {
+      return new Usuario(res.data.data!);
+    });
+  }
+
+  async update(usuario: Usuario): Promise<Usuario> {
+    console.log(usuario);
+    return this.http.patch<ResultHttp<UsuarioProps>>(`/usuarios/${usuario.id}`,usuario).then((res) => {
       return new Usuario(res.data.data!);
     });
   }
@@ -22,20 +29,20 @@ export class UsuarioHttpGateway implements UsuarioGateway {
   }
 
   async findById(id: number): Promise<Usuario> {
-    return this.http.get<Usuario>(`/usuarios/${id}`).then((res) => {
-      return new Usuario(res.data);
+    return this.http.get<ResultHttp<UsuarioProps>>(`/usuarios/${id}`).then((res) => {
+      return new Usuario(res.data.data!);
     });
   }
 
   async findByName(name: string): Promise<Usuario> {
-    return this.http.get<Usuario>(`/usuarios/${name}`).then((res) => {
-      return new Usuario(res.data);
+    return this.http.get<ResultHttp<UsuarioProps>>(`/usuarios/${name}`).then((res) => {
+      return new Usuario(res.data.data!);
     });
   }
 
   async validaLogin(plogin: string, psenha: string): Promise<boolean> {
-    return this.http.post<{loginValid:boolean}>(`/usuarios/validaLogin/${plogin}`,{senha: psenha}).then((res) => {
-      return res.data.loginValid;
+    return this.http.post<ResultHttp<{loginValid:boolean}>>(`/usuarios/validaLogin/${plogin}`,{senha: psenha}).then((res) => {
+      return res.data.data!.loginValid;
     });
   }
 }

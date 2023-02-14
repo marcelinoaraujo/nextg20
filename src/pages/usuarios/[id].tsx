@@ -1,6 +1,7 @@
 import { UsuarioUseCase } from "@/@core/application/usuario/usuario.use-case"; 
 import { Usuario, UsuarioProps } from "@/@core/domain/entities/usuario";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import Link from "next/link";
 import { container, Registry } from "../../@core/infra/container-registry";
 
 type UsuarioDetailPageProps = {
@@ -15,6 +16,13 @@ export const UsuarioDetailPage: NextPage<UsuarioDetailPageProps> = ({
     <div>
       <h3>{usuarioEntity.nome}</h3>
       <label>login</label> {usuarioEntity.login}
+      <br /><br />
+      <Link href={`/usuarios`} passHref>
+              Voltar
+            </Link>
+      <Link href={`/usuarios/edit/${usuarioEntity.id}`} passHref>
+             Editar            </Link>
+
     </div>
   );
 };

@@ -11,6 +11,10 @@ export class UsuarioUseCase {
     return await this.usuarioGate.create(usuario);
   }  
 
+  async udpate(usuario: Usuario): Promise<Usuario> {
+    return await this.usuarioGate.update(usuario);
+  }  
+
   async get(id: number): Promise<Usuario> {
     return await this.usuarioGate.findById(id);
   }  
